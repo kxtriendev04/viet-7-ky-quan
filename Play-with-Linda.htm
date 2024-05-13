@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chơi cùng Linda</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    h2{
+      color: white;
+    }
+    #hat {
+      top: 0;
+      left: 0;
+      width: 650px;
+      height: 650px;
+      background: url(wheel.png);
+      background-repeat: norepeat;
+      background-position: center;
+      background-size: contain;
+      border-radius: 200px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+    #needle {
+      position: absolute;
+      top: 330px;
+      left: 325px;
+      transform-origin: 0% 50%;
+      width: 3px;
+      height: 100px;
+      background-color: darkgreen;
+      border: 1.5px solid white;
+      border-radius: 3px;
+      transform: rotate(7deg);
+    }
+    #secret1{
+      position: fixed;
+      top: 0;
+      right: -100%;
+      bottom: 0;
+      width: 35%;
+      background: #000000;
+      transition: .3s ease;
+    }
+    #secret2{
+      position: fixed;
+      top: 0;
+      right: -100%;
+      bottom: 0;
+      width: 35%;
+      background: #333;
+      transition: .3s ease;
+    }
+    #paris_date{
+      position: fixed;
+      top: 0;
+      right: -100%;
+      bottom: 0;
+      width: 35%;
+      background: #ad0179;
+      transition: .3s ease;
+      height: fit-content;
+    }
+    #hanquoc{
+      position: fixed;
+      top: 0;
+      right: -100%;
+      bottom: 0;
+      width: 35%;
+      background: #025f5f;
+      transition: .3s ease;
+    }
+  </style>
+</head>
+<body>
+  <audio id="playbackMusic" src="0504(1).mp3"></audio>
+  <div id="hat"></div>
+  <div id="needle"></div>
+  <div id="secret1">
+    <h2>Linda muốn nói với bạn!</h2>
+    <video id="video_player1" width="100%">
+      <source src="Di_ra(1).mp4" type="video/mp4">
+    </video>
+    <button id="videobtn1" onclick="play1()">Xem video</button>
+  </div>
+  <div id="secret2">
+    <h2>Linda muốn tâm sự với bạn!</h2>
+    <video id="video_player2" width="100%">
+      <source src="Postcard_Asuk.mp4" type="video/mp4">
+    </video>
+    <button id="videobtn2" onclick="play2()">Xem video</button>
+  </div>
+  <div id="paris_date">
+    <h2>Đi date cùng Linda!</h2>
+    <div>
+      <video id="video_player3" width="60%">
+        <source src="Linda_Gaoranger.mp4" type="video/mp4">
+      </video>
+      <button id="videobtn3" onclick="play3()">Xem video</button>
+    </div>
+    <img src="Paris.jpg" alt="Date with Linda" width="75%">
+  </div>
+  <div id="hanquoc">
+    <h2>Linda muốn hát cho bạn nghe!</h2>
+    <video id="video_player4" width="70%">
+      <source src="HanQuoc.mp4" type="video/mp4">
+    </video>
+    <button id="videobtn4" onclick="play4()">Xem video</button>
+  </div>
+  <button onclick="spin()">Quay</button>
+  <div id="result"></div>
+  <script>
+    function play1() {
+      var video_play1 = document.getElementById('video_player1');
+      video_play1.play();
+      setTimeout(function() {
+        window.location.href = "https://www.google.com/";
+      }, 6600);
+    }
+    function play2() {
+      var video_play2 = document.getElementById('video_player2');
+      video_play2.play();
+      setTimeout(function() {
+        window.location.href = "https://www.facebook.com/";
+      }, 43000);
+    }
+    function play3() {
+      var video_play3 = document.getElementById('video_player3');
+      video_play3.play();
+      setTimeout(function() {
+        window.location.href = "https://www.facebook.com/";
+      }, 56000);
+    }
+    function play4() {
+      var video_play4 = document.getElementById('video_player4');
+      video_play4.play();
+      setTimeout(function() {
+        window.location.href = "https://www.facebook.com/";
+      }, 44000);
+    }
+    var currentRotation = 0; 
+    var backgroundMusic = document.getElementById('playbackMusic');
+    function spin() {
+      var degrees = Math.floor(Math.random() * 380) + 275; // Tạo góc quay ngẫu nhiên (0 đến 1) * 900 + 270;
+      var hat = document.getElementById('hat');
+      var result = document.getElementById('result');
+      hat.style.transition = 'transform 15.5s ease-out'; 
+      playbackMusic.play();
+      setTimeout(function() {
+        currentRotation = currentRotation + degrees; // Thêm góc quay mới vào góc cũ
+        hat.style.transform = 'rotate(' + currentRotation + 'deg)'; // Quay
+      }, 0);
+      setTimeout(function() {
+        var sections = [
+          { name: 'Ô bí mật', link: '#', class: 'oBiMat' },
+          { name: 'Châu Âu', link: '#' },
+          { name: 'Châu Á', link: '#' },
+          { name: '7 kì quan', link: '#' },
+          { name: 'Châu Phi', link: '#' },
+	        { name: 'Trò Chơi', link: '#' },
+          { name: ' Ô bí mật', link: '#', class: 'oBiMat' },
+          { name: 'Paris', link: '#' },
+          { name: 'Châu Mĩ', link: '#' },
+          { name: 'Trò Chơi', link: '#' },
+	        { name: 'Châu Đại Dương', link: '#' },
+	        { name: 'Hàn Quốc', link: '#' }
+        ];
+        var index = Math.floor(currentRotation / 30) % 12; //lấy phần dư của 360 để tìm index trong khoảng 0-11
+        var link = document.createElement('a');
+        console.log(link);
+        if(sections[index].name == 'Ô bí mật'){
+          link.addEventListener('click', function(){
+            document.getElementById('secret1').style.right = '0';
+          })
+        }
+        if(sections[index].name == ' Ô bí mật'){
+          link.addEventListener('click', function(){
+            document.getElementById('secret2').style.right = '0';
+          })
+        }
+        if(sections[index].name == 'Paris'){
+          link.addEventListener('click', function(){
+            document.getElementById('paris_date').style.right = '0';
+          })
+        }
+        if(sections[index].name == 'Hàn Quốc'){
+          link.addEventListener('click', function(){
+            document.getElementById('hanquoc').style.right = '0';
+          })
+        }
+        link.href = sections[index].link; // Lấy link từ mảng sections
+        link.textContent = 'Kết quả: ' + sections[index].name; // Hiển thị kết quả
+        result.innerHTML = '';
+        result.appendChild(link);
+      }, 16000);
+    }
+  </script>
+</body>
+</html>

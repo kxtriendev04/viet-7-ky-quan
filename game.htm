@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trò chơi Xâu Chuỗi</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: black;
+    color: white;
+  }
+  #question {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  #answer {
+    margin: 20px auto;
+    display: block;
+    width: 80%;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+    outline: none;
+  }
+  #countdown {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+  <h1>Trò chơi Vòng Xâu Chuỗi</h1>
+  <div id="question" style="display: none;">Câu hỏi: Ai là người đẹp trai nhất?</div>
+  <input type="text" id="answer" style="display: none;" placeholder="Nhập câu trả lời">
+  <div id="countdown" style="display: none;">Thời gian còn lại: <span id="timer"></span> giây</div>
+  <button onclick="startGame()">Bắt đầu</button>
+  <audio src="30s.mp3" id="playbackMusic"></audio>
+  <script>
+    var answerInput = document.getElementById('answer');
+    var timerDisplay = document.getElementById('timer');
+    var playbackMusic = document.getElementById('playbackMusic');
+
+    function startGame() {
+      playbackMusic.currentTime = 0; // Đặt thời gian của nhạc về đầu để phát lại
+      playbackMusic.play(); // Phát nhạc nền
+
+      setTimeout(function() {
+        document.getElementById('question').style.display = 'block';
+        document.getElementById('answer').style.display = 'block';
+        document.getElementById('countdown').style.display = 'block';
+
+        var countdown = 30; // Thời gian đếm ngược, tính theo giây
+        var countdownInterval = setInterval(function() {
+          countdown--;
+          timerDisplay.textContent = countdown;
+
+          if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            timerDisplay.textContent = 'Hết giờ, 0';
+          }
+        }, 1000);
+
+        answerInput.addEventListener('keyup', function(event) {
+          if (event.keyCode === 13) { // Kiểm tra nếu người chơi nhấn phím Enter
+            checkAnswer(countdownInterval);
+          }
+        });
+      }, 2500); // Delay 2.5 giây trước khi hiển thị đếm ngược
+    }
+
+    function checkAnswer(countdownInterval) {
+      var answer = answerInput.value.trim().toLowerCase();
+      if (answer === "linda") {
+        clearInterval(countdownInterval); // Dừng đếm ngược nếu câu trả lời đúng
+        alert('Chúc mừng! Bạn đã trả lời đúng!');
+        answerInput.value = ''; // Xóa nội dung nhập vào
+
+        // Dừng nhạc hiện tại và chuyển sang nhạc khác
+        playbackMusic.pause();
+        playbackMusic.src = "win.mp3";
+        playbackMusic.currentTime = 0; // Đặt thời gian của nhạc về đầu để phát lại
+        playbackMusic.play();
+      } else {
+        answerInput.value = ''; // Xóa nội dung nhập vào nếu trả lời sai
+      }
+    }
+  </script>
+</body>
+</html>
